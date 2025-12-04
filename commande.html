@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commande - Touche d'Or</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f3f0ff; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 50px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        h1 { text-align: center; color: #4c1d95; }
+        form { display: flex; flex-direction: column; }
+        label { margin-top: 15px; font-weight: bold; }
+        input, textarea { padding: 10px; margin-top: 5px; border-radius: 8px; border: 1px solid #ccc; }
+        button { margin-top: 20px; padding: 12px; background-color: #8b5cf6; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #4c1d95; }
+        .confirmation { text-align: center; margin-top: 20px; color: green; font-weight: bold; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulaire de Commande</h1>
+        <form id="formCommande">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+
+            <label for="telephone">Téléphone :</label>
+            <input type="tel" id="telephone" name="telephone" required>
+
+            <label for="adresse">Adresse :</label>
+            <textarea id="adresse" name="adresse" rows="3" required></textarea>
+
+            <label for="produit">Produit :</label>
+            <input type="text" id="produit" name="produit" readonly>
+
+            <button type="submit">Commander</button>
+        </form>
+
+        <div class="confirmation" id="confirmationMessage" style="display:none;">
+            Votre commande a été passée avec succès !
+        </div>
+    </div>
+
+    <script>
+        // Pré-remplir le produit depuis l'URL
+        const params = new URLSearchParams(window.location.search);
+        const produit = params.get('produit') || '';
+        document.getElementById('produit').value = produit;
+
+        // Gestion de l'envoi du formulaire
+        document.getElementById('formCommande').addEventListener('submit', function(e) {
+            e.preventDefault(); // Empêche le rechargement de la page
+            // On peut récupérer les infos si besoin
+            const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
+            const telephone = document.getElementById('telephone').value;
+            const adresse = document.getElementById('adresse').value;
+            const produit = document.getElementById('produit').value;
+
+            // Affiche le message de confirmation
+            const confirmation = document.getElementById('confirmationMessage');
+            confirmation.style.display = 'block';
+
+            // Réinitialise le formulaire si souhaité
+            document.getElementById('formCommande').reset();
+            document.getElementById('produit').value = produit; // garde le produit affiché
+        });
+    </script>
+</body>
+</html>
